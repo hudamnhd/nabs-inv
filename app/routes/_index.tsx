@@ -180,16 +180,20 @@ function App() {
 		from: { y: 0, transform: "scale(1)" },
 		to: { y: -20, transform: "scale(1.7)" },
 		config: { tension: 40, friction: 60 },
-		delay: 150,
-		reset: activeOffset === 0, //
+		onResolve: activeOffset === 0 ? goOne() : null,
 	});
+
+	function goOne() {
+		setTimeout(() => {
+			parallax.current.scrollTo(1);
+			setActiveOffset(1);
+		}, 1500);
+	}
 
 	const springs2 = useSpring({
 		from: { transform: "scale(2)", opacity: 1 },
 		to: { transform: "scale(1.5)", opacity: 1 },
 		config: { tension: 60, friction: 60 },
-		delay: 150,
-		reset: activeOffset === 0, //
 	});
 
 	const springs3 = useSpring({
@@ -236,8 +240,8 @@ function App() {
 		reset: activeOffset === 2, //
 	});
 	const springsTwo = useSpring({
-		transform: activeOffset === 2 ? "scale(1)" : "scale(1.5)",
-		y: activeOffset === 2 ? 0 : 100,
+		transform: activeOffset === 2 ? "scale(0.75)" : "scale(2)",
+		y: activeOffset === 2 ? 80 : 0,
 		config: { tension: 80, friction: 60 },
 		delay: 300,
 		reset: activeOffset === 2, //
@@ -251,16 +255,17 @@ function App() {
 	});
 	const springs9 = useSpring({
 		transform: activeOffset === 2 ? "scale(1)" : "scale(1.5)",
-		opacity: activeOffset === 2 ? 1 : 0,
+		y: activeOffset === 2 ? 0 : 500,
 		config: { tension: 80, friction: 60 },
-		delay: 700,
+		delay: 1400,
 		reset: activeOffset === 2, //
 	});
 	const springs9d = useSpring({
-		y: activeOffset === 3 ? 0 : 100,
+		transform: activeOffset === 3 ? "scale(1)" : "scale(1.5)",
 		opacity: activeOffset === 3 ? 1 : 0,
+		y: activeOffset === 3 ? 0 : 500,
 		config: { tension: 80, friction: 60 },
-		delay: 300,
+		delay: 1400,
 		reset: activeOffset === 3, //
 	});
 	const springs10 = useSpring({
@@ -300,6 +305,7 @@ function App() {
 	const springs11 = useSpring({
 		transform: activeOffset === 5 ? "scale(1)" : "scale(2)",
 		opacity: activeOffset === 5 ? 1 : 0,
+		x: activeOffset === 5 ? 0 : 300,
 		config: { tension: 60, friction: 60 },
 		delay: 2000,
 		reset: activeOffset === 5, //
@@ -373,10 +379,6 @@ function App() {
 				<ParallaxLayer
 					offset={1}
 					speed={0.5}
-					onClick={() => {
-						parallax.current.scrollTo(2);
-						setActiveOffset(2);
-					}}
 					style={{
 						display: "flex",
 						alignItems: "center",
@@ -434,7 +436,13 @@ function App() {
 											Kindly note that this invitation is for the named
 											recipient(s) only.
 										</p>
-										<button className="font-baskervville uppercase text-white ring-2 ring-white rounded-full py-1.5 px-4 font-bold hover:bg-white/10 duration-300">
+										<button
+											onClick={() => {
+												parallax.current.scrollTo(2);
+												setActiveOffset(2);
+											}}
+											className="font-baskervville uppercase text-white ring-2 ring-white rounded-full py-1.5 px-4 font-bold hover:bg-white/10 duration-300"
+										>
 											Buka Undangan
 										</button>
 									</div>
@@ -455,8 +463,6 @@ function App() {
 						display: "flex",
 						alignItems: "center",
 						justifyContent: "center",
-						height: "100vh",
-						width: "100%",
 					}}
 				>
 					<div className="relative h-screen">
@@ -477,15 +483,12 @@ function App() {
 						<animated.div
 							style={{
 								position: "absolute",
-								bottom: "-80px",
+								bottom: "0px",
 								zIndex: "2",
 								...springsTwo,
 							}}
 						>
-							<img
-								src="/assets/frame/background/two-person.png"
-								className="scale-75"
-							/>
+							<img src="/assets/frame/background/two-person.png" />
 						</animated.div>
 						<animated.div
 							style={{
@@ -583,7 +586,6 @@ function App() {
 						style={{
 							position: "absolute",
 							top: "0px",
-							zIndex: "2",
 							width: "100%",
 							...springs9d,
 						}}
@@ -715,7 +717,6 @@ function App() {
 							...springs11,
 							position: "absolute",
 							top: "0px",
-							zIndex: "3",
 						}}
 					>
 						<div className="flex items-center flex-col text-center space-y-1.5 py-10 mt-5">
