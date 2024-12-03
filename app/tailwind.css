@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+	@apply bg-white dark:bg-gray-950;
+
+	@media (prefers-color-scheme: dark) {
+		color-scheme: light;
+	}
+}
+
+@font-face {
+	font-family: "Edwardian Script ITC";
+	src: local("Edwardian Script ITC"),
+		url("/assets/fonts/edwardian-script-itc.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "Baskerville Old Face";
+	src: local("Baskerville Old Face"),
+		url("/assets/fonts/baskerville-old-face.ttf") format("truetype");
+}
+
+.font-edwardian {
+	font-family: "Edwardian Script ITC";
+}
+
+.font-baskervville {
+	font-family: "Baskerville Old Face", serif;
+}

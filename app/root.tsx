@@ -1,29 +1,34 @@
 import {
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
+	Links,
+	Meta,
+	Outlet,
+	Scripts,
+	ScrollRestoration,
 } from "@remix-run/react";
+import type { LinksFunction } from "@remix-run/node";
 
-import tailwindStyleSheetUrl from "~/styles/tailwind.css?url"; // "~/styles/tailwind.css?url";
+import "./tailwind.css";
 
-export const links = () => [{ rel: "stylesheet", href: tailwindStyleSheetUrl }];
+export const links: LinksFunction = () => [];
+
+export function Layout({ children }: { children: React.ReactNode }) {
+	return (
+		<html lang="en">
+			<head>
+				<meta charSet="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<Meta />
+				<Links />
+			</head>
+			<body>
+				{children}
+				<ScrollRestoration />
+				<Scripts />
+			</body>
+		</html>
+	);
+}
 
 export default function App() {
-  return (
-    <html lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        <Outlet />
-        <ScrollRestoration />
-        <Scripts />
-      </body>
-    </html>
-  );
+	return <Outlet />;
 }
